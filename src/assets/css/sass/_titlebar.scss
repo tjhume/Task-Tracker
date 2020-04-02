@@ -1,0 +1,30 @@
+header{
+    background-color: #3C3C3C;
+    height: 29px;
+    line-height: 29px;
+    -webkit-user-select: none;
+    -webkit-app-region: drag;
+    overflow: hidden;
+    .ib{
+        width: 45px;
+        text-align: center;
+        -webkit-app-region: no-drag;
+        -webkit-transition: background-color 0.3s;
+        -o-transition: background-color 0.3s;
+        transition: background-color 0.3s;
+        &:hover{
+            background-color: #505050;
+        }
+    }
+    #close:hover{
+        background-color: #D71526;
+    }
+    .logo{
+        height: 19px;
+        margin-left: 10px;
+        margin-top: 5px;
+    }
+    .title{
+        font-size: 12px;
+    }
+}

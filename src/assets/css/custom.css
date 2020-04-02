@@ -1,0 +1,137 @@
+/* Variable */
+/* Imports */
+/* open-sans-regular - latin */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local("Open Sans Regular"), local("OpenSans-Regular"), url("../fonts/open-sans-v17-latin-regular.woff2") format("woff2"), url("../fonts/open-sans-v17-latin-regular.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* open-sans-italic - latin */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: italic;
+  font-weight: 400;
+  src: local("Open Sans Italic"), local("OpenSans-Italic"), url("../fonts/open-sans-v17-latin-italic.woff2") format("woff2"), url("../fonts/open-sans-v17-latin-italic.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* open-sans-700 - latin */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local("Open Sans Bold"), local("OpenSans-Bold"), url("../fonts/open-sans-v17-latin-700.woff2") format("woff2"), url("../fonts/open-sans-v17-latin-700.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* open-sans-700italic - latin */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: italic;
+  font-weight: 700;
+  src: local("Open Sans Bold Italic"), local("OpenSans-BoldItalic"), url("../fonts/open-sans-v17-latin-700italic.woff2") format("woff2"), url("../fonts/open-sans-v17-latin-700italic.woff") format("woff");
+  /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #1E1E1E;
+  font-family: 'Open Sans', sans-serif;
+  color: white;
+  font-size: 14px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.ib {
+  display: inline-block;
+}
+
+.col {
+  float: left;
+  overflow: hidden;
+}
+
+.col.no-pad {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.clear {
+  clear: both;
+}
+
+.half {
+  width: 50%;
+}
+
+.third {
+  width: 33.33%;
+}
+
+.fourth {
+  width: 25%;
+}
+
+.fifth {
+  width: 20%;
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+header {
+  background-color: #3C3C3C;
+  height: 29px;
+  line-height: 29px;
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+  overflow: hidden;
+}
+
+header .ib {
+  width: 45px;
+  text-align: center;
+  -webkit-app-region: no-drag;
+  -webkit-transition: background-color 0.3s;
+  -o-transition: background-color 0.3s;
+  transition: background-color 0.3s;
+}
+
+header .ib:hover {
+  background-color: #505050;
+}
+
+header #close:hover {
+  background-color: #D71526;
+}
+
+header .logo {
+  height: 19px;
+  margin-left: 10px;
+  margin-top: 5px;
+}
+
+header .title {
+  font-size: 12px;
+}
+/*# sourceMappingURL=custom.css.map */

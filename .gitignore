@@ -1,0 +1,6 @@
+node_modules
+out
+src/assets/css/custom.css.map
+.vscode
+.compilerc
+.eslintrc

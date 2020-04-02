@@ -1,0 +1,49 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: #1E1E1E;
+    font-family: 'Open Sans', sans-serif;
+    color: white;
+    font-size: $fontSize;
+}
+.text-center{
+    text-align: center;
+}
+.text-right{
+    text-align: right;
+}
+.ib{
+    display: inline-block;
+}
+.col{
+    float: left;
+    overflow: hidden;
+    &.no-pad{
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}
+.clear{
+    clear: both;
+}
+.half{
+    width: 50%;
+}
+.third{
+    width: 33.33%;
+}
+.fourth{
+    width: 25%;
+}
+.fifth{
+    width: 20%;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
