@@ -9,6 +9,13 @@ body{
     color: white;
     font-size: $fontSize;
 }
+.app-content{
+    position: relative;
+    height: 100%;
+}
+.main-content{
+    margin-left: 300px;
+}
 .text-center{
     text-align: center;
 }

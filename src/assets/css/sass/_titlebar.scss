@@ -5,6 +5,8 @@ header{
     -webkit-user-select: none;
     -webkit-app-region: drag;
     overflow: hidden;
+    position: relative;
+    z-index: 9999;
     .ib{
         width: 45px;
         text-align: center;

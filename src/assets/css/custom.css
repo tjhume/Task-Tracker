@@ -49,6 +49,15 @@ body {
   font-size: 14px;
 }
 
+.app-content {
+  position: relative;
+  height: 100%;
+}
+
+.main-content {
+  margin-left: 300px;
+}
+
 .text-center {
   text-align: center;
 }
@@ -106,6 +115,8 @@ header {
   -webkit-user-select: none;
   -webkit-app-region: drag;
   overflow: hidden;
+  position: relative;
+  z-index: 9999;
 }
 
 header .ib {
@@ -133,5 +144,19 @@ header .logo {
 
 header .title {
   font-size: 12px;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  padding-top: 29px;
+  width: 300px;
+  background-color: #252526;
+}
+
+.sidebar-title {
+  padding: 5px 0px;
 }
 /*# sourceMappingURL=custom.css.map */

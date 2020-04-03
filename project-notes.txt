@@ -1,0 +1,25 @@
+Project Notes
+
+Focusing on just daily tasks for now. Can expand on it if necessary.
+
+Features
+    - Time Tracking
+        1. Tasks can be created with 2 main options:
+            a. Standard task - You set a minimum time to work on the task. Has the following suboptions:
+                I. Checkbox to not use time tracking. For shorter tasks. There would be a check button instead of a time button for these tasks.
+                II. Checkbox to notify when completed.
+                III. Select to allow user to pick a recommended start time. Will alert x minutes before task (perhaps another dropdown?)
+                IV. Autocomplete true/fase (default true)
+            b. Limited Task - You set a maximum time to work on the task
+                I. Checkbox to alert when limited time is reached
+                II. Grace period before autofailing
+        2. Tasks can be switched to failed/completed at any time, but with a warning dialog.
+    - App will auto-open to current day. User should be able to create the tasks for that day beforehand. If they haven't created the task, they should be able to pick from a pre-made template or copy from the previous day.
+
+Layout
+    - Daily tasks will take up the main section of the page. You can open multiple dates, which will be displayed in the tabs at the top. Have some style that sets the current day apart from history.
+    - The sidebar may be laid out like VS code. There should be the following tabs
+        1. History
+            a. Year select -> Month Select and then all days of the month are displayed. You should be able to see all of your information as it was at that time on the main display. It will open in a new tab at the top.
+        2. Settings
+    - The bottom (style like VS Code) should have notes that you can edit
