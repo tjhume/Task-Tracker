@@ -54,3 +54,17 @@ body{
 .fr{
     float: right;
 }
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+    border-radius: 3px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: rgb(66, 66, 66);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(83, 83, 83);
+}

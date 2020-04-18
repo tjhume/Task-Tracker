@@ -14,7 +14,7 @@ if(store.get('used') == undefined){
 // Document loaded
 currentWindow.webContents.once('dom-ready', () => {
 
-    // Initialization
+    // Settings initialization
     if(!firstTime){
         if(store.get('window.maximized')){
             currentWindow.maximize();
@@ -25,6 +25,8 @@ currentWindow.webContents.once('dom-ready', () => {
         }
     }
 
+
+    // Window controls
     $('#close').click(function(){
         currentWindow.close();
     });
@@ -44,4 +46,27 @@ currentWindow.webContents.once('dom-ready', () => {
         var size = currentWindow.getSize();
         store.set('window.size', size);
     });
+
+    var d = new Date();
+    var month = d.getMonth()+1;
+    var day = d.getDate();
+    var output = (month<10 ? '0' : '') + month + '/' + (day<10 ? '0' : '') + day + '/' + d.getFullYear();
+    $('.tabs .current').html('<span>' + output + '</span><span class="close"><i class="fas fa-times"></i></span>');
+    $('.tabs .tab').click(function(){
+        $(this).siblings('.current').find('i').css('opacity', '0');
+        $(this).siblings('.current').removeClass('current');
+        $(this).addClass('current');
+        $(this).find('i').css('opacity', '1');
+    });
+    $('.tabs .tab').hover(function(){
+        if(!$(this).hasClass('current')){
+            $(this).find('i').css('opacity', '1');
+        }
+    },
+    function(){
+        if(!$(this).hasClass('current')){
+            $(this).find('i').css('opacity', '0');
+        }
+    });
+
 });

@@ -108,6 +108,24 @@ body {
   float: right;
 }
 
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #424242;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #535353;
+}
+
 header {
   background-color: #3C3C3C;
   height: 29px;
@@ -154,9 +172,64 @@ header .title {
   padding-top: 29px;
   width: 300px;
   background-color: #252526;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 .sidebar-title {
   padding: 5px 0px;
+}
+
+.main-content .tabs {
+  height: 35px;
+  background-color: #252526;
+  font-size: 1px;
+  user-select: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.main-content .tabs .tab {
+  height: 35px;
+  line-height: 35px;
+  padding-left: 30px;
+  padding-right: 30px;
+  background-color: #2d2d2d;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 14px;
+  position: relative;
+}
+
+.main-content .tabs .tab span {
+  opacity: 0.5;
+}
+
+.main-content .tabs .tab span i {
+  height: 35px;
+  line-height: 35px;
+  right: 9px;
+  top: 1px;
+  position: absolute;
+  opacity: 0;
+}
+
+.main-content .tabs .tab.current {
+  background-color: #1e1e1e;
+}
+
+.main-content .tabs .tab.current span {
+  opacity: 1;
+}
+
+.main-content .tabs .tab.current span i {
+  opacity: 1;
 }
 /*# sourceMappingURL=custom.css.map */
