@@ -14,7 +14,8 @@ const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    frame: false
+    frame: false,
+    backgroundColor: '#1E1E1E'
   });
 
   // Open the DevTools.

@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="assets/css/custom.css">
 
     <script>window.$ = window.jQuery = require('./assets/js/jquery.min.js');</script>
+    <script src = "assets/js/jquery.plugin.min.js"></script>
+    <script src="assets/js/jquery.countdown.min.js"></script>
     <script src="assets/js/custom.js"></script>
 
   </head>
@@ -33,13 +35,41 @@
     
     <div class="app-content">
       <div class="sidebar">
-        <div class="sidebar-title text-center">HISTORY</div>
+        <div class="sidebar-title text-center">History</div>
       </div>
 
       <div class="main-content">
         <div class="tabs">
           <div class="current tab"></div>
           <div class="tab"><span>4/18/2020</span><span class="close"><i class="fas fa-times"></i></span></div>
+        </div>
+        <div class="add-modal">
+          <div class="table">
+            <div class="cell-center">
+              <div class="add-box">
+                <i class="fas fa-times"></i>
+                <h2>Add Task</h2>
+                <div><label>Task Name: </label><input type="text" class="task-name" maxlength="100"></div>
+                <div><label>Hours Required: </label><input type="number" class="hours" max="23"></div>
+                <div><label>Minutes Required: </label><input type="number" class="minutes" max="59"></div>
+                <div><label>Seconds Required: </label><input type="number" class="seconds" max="59"></div>
+                <div class="add-button">Add<i class="fas fa-plus"></i></div>
+                <div class="error"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="content-wrap">
+          <div class="content active">
+            <h2 class="text-center"></h2>
+            <ul>
+              <li>A list item <div class="time-wrap"><i class="fas fa-play"></i><span class="time">2:00</span></div></li>
+              <li>A list item <div class="time-wrap"><i class="fas fa-play"></i><span class="time">2:00</span></div></li>
+              <li>A list item <div class="time-wrap"><i class="fas fa-play"></i><span class="time">2:00</span></div></li>
+              <li>A list item <div class="time-wrap"><i class="fas fa-play"></i><span class="time">2:00</span></div></li>
+            </ul>
+            <div class="add-task">Add Task<i class="fas fa-plus"></i></div>
+          </div>
         </div>
       </div>
     </div>

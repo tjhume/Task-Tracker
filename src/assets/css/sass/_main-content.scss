@@ -43,4 +43,170 @@
             }
         }
     }
+    .content-wrap{
+        position: relative;
+    }
+    .content{
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 20px;
+    }
+    h2{
+        margin-bottom: 20px;
+    }
+    ul{
+        width: 90%;
+        max-width: 700px;
+        margin: 0 auto;
+        list-style-type: none;
+        li{
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            &.disabled{
+                opacity: 0.5;
+                pointer-events: none;
+            }
+        }
+        li:nth-child(odd){
+            background-color: rgb(60, 60, 60);
+        }
+    }
+    .time-wrap{
+        float: right;
+        i{
+            margin-right: 20px;
+            cursor: pointer;
+        }
+    }
+    .add-modal{
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        background-color: rgba(0, 0, 0, 0.3);
+        z-index: 9998;
+        display: none;
+        .cell-center{
+            text-align: center;
+        }
+    }
+    .add-box{
+        background-color: rgb(37, 37, 38);
+        padding: 20px;
+        display: inline-block;
+        text-align: left;
+        position: relative;
+        .fa-times{
+            text-align: center;
+            position: absolute;
+            top: 13px;
+            right: 10px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+        }
+        div{
+            width: 300px;
+            margin-bottom: 15px;
+            height: 25px;
+            line-height: 25px;
+            &:nth-child(1){
+                margin-bottom: 0px;
+            }
+        }
+        h2{
+            margin-bottom: 30px;
+        }
+        input{
+            height: 25px;
+            line-height: 25px;
+            float: right;
+            color: white;
+            background-color: rgb(60, 60, 60);
+            border: none;
+            padding-left: 15px;
+            &:focus{
+                outline-color: rgb(23, 91, 137);
+            }
+        }
+        .error{
+            display: none;
+            text-align: center;
+            color: red;
+            font-weight: normal;
+        }
+        .task-name{
+            width: 150px;
+        }
+        .hours, .minutes, .seconds{
+            width: 65px;
+        }
+        .add-button{
+            width: 150px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 40px;
+            height: 30px;
+            line-height: 30px;
+            cursor: pointer;
+            background-color: rgb(60, 60, 60);
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -webkit-transition: opacity 0.3s;
+            -o-transition: opacity 0.3s;
+            transition: opacity 0.3s;
+            position: relative;
+            text-align: center;
+            &:hover{
+                opacity: 0.5;
+            }
+            i{
+                position: absolute;
+                top: 0px;
+                right: 13px;
+                height: 30px;
+                line-height: 30px;
+            }
+        }
+    }
+    .add-task{
+        width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 40px;
+        height: 40px;
+        line-height: 40px;
+        cursor: pointer;
+        background-color: rgb(60, 60, 60);
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -webkit-transition: opacity 0.3s;
+        -o-transition: opacity 0.3s;
+        transition: opacity 0.3s;
+        position: relative;
+        text-align: center;
+        &:hover{
+            opacity: 0.5;
+        }
+        i{
+            position: absolute;
+            top: 0px;
+            right: 20px;
+            height: 40px;
+            line-height: 40px;
+        }
+    }
 }
