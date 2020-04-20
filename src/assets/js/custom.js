@@ -5,6 +5,7 @@ const store = new Store();
 
 var firstTime = false;
 var counting = false;
+var date = getDate();
 if(store.get('used') == undefined){
     firstTime = true;
     store.set('window.maximized', false);
@@ -24,10 +25,28 @@ currentWindow.webContents.once('dom-ready', () => {
             currentWindow.setSize(sizes[0], sizes[1]);
             currentWindow.center();
         }
-        // If there is data for this date
-        if(store.get(getDate)){
-
+    }
+    // If there is data for this date
+    if(store.get(date) != undefined){
+        var tasks = store.get(date);
+        for(var i = 0; i < tasks.length; i++){
+            var task = tasks[i][0];
+            var remaining = tasks[i][2];
+            $('.main-content .content.active ul').append('<li class="adding-task">'+task+'<div class="time-wrap"><i class="fas fa-play"></i><span class="time"></span></div></li>');
+            $('.adding-task .time-wrap .time').data('index', i);
+            $('.adding-task .time-wrap .time').countdown({layout : '{hnn}:{mnn}:{snn}', until : '+'+remaining, tickInterval: 10, onTick: function(){
+                var index = $(this).data('index');
+                var updateTasks = store.get(date);
+                var periods;
+                var periods = $(this).countdown('getTimes');
+                updateTasks[index][2] = $.countdown.periodsToSeconds(periods);
+                store.set(date, updateTasks);
+            }});
+            $('.adding-task .time-wrap .time').countdown('pause');
+            $('.adding-task').removeClass('adding-task');
         }
+    }else{
+        store.set(date, []);
     }
 
 
@@ -53,14 +72,9 @@ currentWindow.webContents.once('dom-ready', () => {
     });
 
     // Create current tab and page
-    var d = new Date();
-    var month = d.getMonth()+1;
-    var day = d.getDate();
-    var output = 'Today: ' + (month<10 ? '0' : '') + month + '/' + (day<10 ? '0' : '') + day + '/' + d.getFullYear();
+    var output = 'Today: ' + date;
     $('.tabs .current').html('<span>' + output + '</span><span class="close">');
     $('.main-content .content h2').html(output);
-    $('.main-content .time-wrap .time').countdown({layout : '{hnn}:{mnn}:{snn}', until : '+7200'});
-    $('.main-content .time-wrap .time').countdown('pause');
 
     // Switching tabs
     $('.tabs .tab').click(function(){
@@ -109,20 +123,37 @@ currentWindow.webContents.once('dom-ready', () => {
     });
     $('.add-modal .add-button').click(function(){
         var empty = '';
+        var hasTime = false;
         $('.add-modal input').each(function(){
             if($(this).val() == '' && $(this).hasClass('task-name')){
                 empty = 'Please enter a task name';
-                return;
             }else if($(this).val() != '' && !$(this).hasClass('task-name')){
-                empty = 'Please enter at least one time value';
+                hasTime = true;
             }
         });
+        if(!hasTime && empty == ''){
+            empty = 'Please enter at least one time value';
+        }
         if(empty != ''){
             $('.add-modal .error').html(empty);
             $('.add-modal .error').css('display', 'block');
             return;
+        }else{
+            $('.add-modal .error').html('');
+            $('.add-modal .error').css('display', 'none');
         }
 
+        // Modal submission is valid
+        var taskName = $('.add-modal .task-name').val();
+        var seconds = 0;
+        seconds += $('.add-modal .hours').val() * 3600;
+        seconds += $('.add-modal .minutes').val() * 60;
+        seconds += $('.add-modal .seconds').val();
+
+        addTask(taskName, seconds);
+
+        $('.add-modal').css('display', 'none');
+        $('.add-modal input').val('');
     });
 
     // Start/stop task timer on click
@@ -155,4 +186,41 @@ function getDate(){
     var day = d.getDate();
     var output = (month<10 ? '0' : '') + month + '/' + (day<10 ? '0' : '') + day + '/' + d.getFullYear();
     return output;
+}
+
+function addTask(task, seconds){
+    var tasks = store.get(date);
+    tasks.push([task, seconds, seconds]);
+    store.set(date, tasks);
+    $('.main-content .content.active ul').append('<li class="adding-task">'+task+'<div class="time-wrap"><i class="fas fa-play"></i><span class="time"></span></div></li>');
+    $('.adding-task .time-wrap .time').data('index', tasks.length-1);
+    $('.adding-task .time-wrap .time').countdown({layout : '{hnn}:{mnn}:{snn}', until : '+'+seconds, tickInterval: 10, onTick: function(){
+        var index = $(this).data('index');
+        var updateTasks = store.get(date);
+        var periods = $(this).countdown('getTimes');
+        updateTasks[index][2] = $.countdown.periodsToSeconds(periods);
+        store.set(date, updateTasks);
+    }});
+    $('.adding-task .time-wrap .time').countdown('pause');
+    $('.adding-task i').click(function(){
+        if($(this).hasClass('fa-play')){
+            if(counting){
+                return;
+            }
+            $(this).removeClass('fa-play');
+            $(this).addClass('fa-pause');
+            $(this).closest('li').addClass('current');
+            $('.main-content li').not('.current').addClass('disabled');
+            $(this).siblings('.time').countdown('resume');
+            counting = true;
+        }else{
+            $(this).removeClass('fa-pause');
+            $(this).addClass('fa-play');
+            $(this).closest('li').removeClass('current');
+            $('.main-content li').removeClass('disabled');
+            $(this).siblings('.time').countdown('pause');
+            counting = false;
+        }
+    });
+    $('.adding-task').removeClass('adding-task');
 }
