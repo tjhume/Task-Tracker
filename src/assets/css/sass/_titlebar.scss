@@ -3,7 +3,6 @@ header{
     height: 29px;
     line-height: 29px;
     -webkit-user-select: none;
-    -webkit-app-region: drag;
     overflow: hidden;
     position: relative;
     z-index: 9999;
@@ -28,5 +27,15 @@ header{
     }
     .title{
         font-size: 12px;
+    }
+    .titlebar-drag-region{
+        top: 6px;
+        left: 6px;
+        display: block;
+        position: absolute;
+        width: calc(100% - 12px);
+        height: calc(100% - 6px);
+        z-index: -1;
+        -webkit-app-region: drag;
     }
 }
