@@ -87,8 +87,14 @@ currentWindow.webContents.once('dom-ready', () => {
     // Closing tab
     $('.tabs .tab i').click(function(){
         $(this).closest('.tabs').find('.tab:last-child').find('i').css('opacity', '1');
-        $(this).closest('.tabs').find('.tab:last-child').addClass('current');
+        var isCurrent = false;
+        if($(this).closest('.tab').hasClass('current')){
+            isCurrent = true;
+        }
         $(this).closest('.tab').remove();
+        if(isCurrent){
+            $('.tabs .tab:last-child').addClass('current');
+        }
     });
 
     // Hovering tab
