@@ -32,7 +32,7 @@ currentWindow.webContents.once('dom-ready', () => {
         for(var i = 0; i < tasks.length; i++){
             var task = tasks[i][0];
             var remaining = tasks[i][2];
-            $('.main-content .content.active ul').append('<li class="adding-task">'+task+'<div class="time-wrap"><i class="fas fa-play"></i><span class="time"></span></div></li>');
+            $('.main-content .content.active ul').append('<li class="adding-task">'+task+'<div class="time-wrap"><i class="fas fa-play"></i><span class="time"></span><span class="fas fa-times"></span></div></li>');
             $('.adding-task .time-wrap .time').data('index', i);
             $('.adding-task .time-wrap .time').countdown({layout : '{hnn}:{mnn}:{snn}', until : '+'+remaining, tickInterval: 10, onTick: function(){
                 var index = $(this).data('index');
@@ -146,9 +146,26 @@ currentWindow.webContents.once('dom-ready', () => {
         // Modal submission is valid
         var taskName = $('.add-modal .task-name').val();
         var seconds = 0;
-        seconds += $('.add-modal .hours').val() * 3600;
-        seconds += $('.add-modal .minutes').val() * 60;
-        seconds += $('.add-modal .seconds').val();
+        var hours, minutes, inpseconds;
+        if($('.add-modal .hours').val() == ''){
+            hours = 0;
+        }else{
+            hours = $('.add-modal .hours').val();
+        }
+        if($('.add-modal .minutes').val() == ''){
+            minutes = 0;
+        }else{
+            minutes = $('.add-modal .hours').val();
+        }
+        if($('.add-modal .seconds').val() == ''){
+            inpseconds = 0;
+        }else{
+            inpseconds = $('.add-modal .seconds').val();
+        }
+        
+        seconds += hours * 3600;
+        seconds += minutes * 60;
+        seconds += inpseconds;
 
         addTask(taskName, seconds);
 
@@ -178,6 +195,19 @@ currentWindow.webContents.once('dom-ready', () => {
         }
     });
 
+    // Delete task
+    $('.main-content .time-wrap .fa-times').click(function(){
+        var index = $(this).siblings('.time').data('index');
+        var tasks = store.get(date);
+        tasks.splice(index, 1);
+        store.set(date, tasks);
+        $(this).siblings('.time').countdown('destroy');
+        $(this).closest('li').remove();
+        reindex();
+        $('.main-content li').removeClass('disabled');
+        counting = false;
+    });
+
 });
 
 function getDate(){
@@ -192,7 +222,7 @@ function addTask(task, seconds){
     var tasks = store.get(date);
     tasks.push([task, seconds, seconds]);
     store.set(date, tasks);
-    $('.main-content .content.active ul').append('<li class="adding-task">'+task+'<div class="time-wrap"><i class="fas fa-play"></i><span class="time"></span></div></li>');
+    $('.main-content .content.active ul').append('<li class="adding-task">'+task+'<div class="time-wrap"><i class="fas fa-play"></i><span class="time"></span><span class="fas fa-times"></span></div></li>');
     $('.adding-task .time-wrap .time').data('index', tasks.length-1);
     $('.adding-task .time-wrap .time').countdown({layout : '{hnn}:{mnn}:{snn}', until : '+'+seconds, tickInterval: 10, onTick: function(){
         var index = $(this).data('index');
@@ -222,5 +252,22 @@ function addTask(task, seconds){
             counting = false;
         }
     });
+    $('.adding-task .time-wrap .fa-times').click(function(){
+        var index = $(this).siblings('.time').data('index');
+        var tasks = store.get(date);
+        tasks.splice(index, 1);
+        store.set(date, tasks);
+        $(this).siblings('.time').countdown('destroy');
+        $(this).closest('li').remove();
+        reindex();
+        $('.main-content li').removeClass('disabled');
+        counting = false;
+    });
     $('.adding-task').removeClass('adding-task');
+}
+
+function reindex(){
+    $('.main-content .content.active li .time-wrap .time').each(function(i){
+        $(this).data('index', i);
+    });
 }

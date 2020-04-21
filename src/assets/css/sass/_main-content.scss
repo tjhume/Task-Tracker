@@ -73,6 +73,14 @@
                 opacity: 0.5;
                 pointer-events: none;
             }
+            .fa-times{
+                margin-left: 20px;
+                cursor: pointer;
+                opacity: 0;
+            }
+            &:hover .fa-times{
+                opacity: 1;
+            }
         }
         li:nth-child(odd){
             background-color: rgb(60, 60, 60);

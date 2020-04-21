@@ -297,6 +297,16 @@ header .titlebar-drag-region {
   pointer-events: none;
 }
 
+.main-content ul li .fa-times {
+  margin-left: 20px;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.main-content ul li:hover .fa-times {
+  opacity: 1;
+}
+
 .main-content ul li:nth-child(odd) {
   background-color: #3c3c3c;
 }
