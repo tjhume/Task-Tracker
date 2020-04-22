@@ -78,8 +78,21 @@
                 cursor: pointer;
                 opacity: 0;
             }
+            .fa-check{
+                display: none;
+                margin-right: 20px;
+                color: green;
+            }
             &:hover .fa-times{
                 opacity: 1;
+            }
+            &.complete{
+                .fa-play{
+                    display: none;
+                }
+                .fa-check{
+                    display: inline-block;
+                }
             }
         }
         li:nth-child(odd){

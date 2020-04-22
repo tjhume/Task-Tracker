@@ -303,8 +303,22 @@ header .titlebar-drag-region {
   opacity: 0;
 }
 
+.main-content ul li .fa-check {
+  display: none;
+  margin-right: 20px;
+  color: green;
+}
+
 .main-content ul li:hover .fa-times {
   opacity: 1;
+}
+
+.main-content ul li.complete .fa-play {
+  display: none;
+}
+
+.main-content ul li.complete .fa-check {
+  display: inline-block;
 }
 
 .main-content ul li:nth-child(odd) {

@@ -33,7 +33,11 @@ currentWindow.webContents.once('dom-ready', () => {
         for(var i = 0; i < tasks.length; i++){
             var task = tasks[i][0];
             var remaining = tasks[i][2];
-            $('.main-content .content.active ul').append('<li class="adding-task">'+task+'<div class="time-wrap"><i class="fas fa-play"></i><span class="time"></span><span class="fas fa-times"></span></div></li>');
+            var completeStr = '';
+            if(remaining == 0){
+                completeStr = ' complete';
+            }
+            $('.main-content .content.active ul').append('<li class="adding-task'+completeStr+'">'+task+'<div class="time-wrap"><i class="fas fa-play"></i><span class="fas fa-check"></span><span class="time"></span><span class="fas fa-times"></span></div></li>');
             $('.adding-task .time-wrap .time').data('index', i);
             $('.adding-task .time-wrap .time').countdown({layout : '{hnn}:{mnn}:{snn}', until : '+'+remaining, tickInterval: 10, onTick: function(){
                 var index = $(this).data('index');
@@ -42,6 +46,15 @@ currentWindow.webContents.once('dom-ready', () => {
                 var periods = $(this).countdown('getTimes');
                 updateTasks[index][2] = $.countdown.periodsToSeconds(periods);
                 store.set(date, updateTasks);
+                if(updateTasks[index][2] == 0){
+                    $(this).closest('li').addClass('complete');
+                    $(this).countdown('pause');
+                    $(this).siblings('i').removeClass('fa-pause');
+                    $(this).siblings('i').addClass('fa-play');
+                    $(this).closest('li').removeClass('current');
+                    $('.main-content li').removeClass('disabled');
+                    counting = false;
+                }
             }});
             $('.adding-task .time-wrap .time').countdown('pause');
             $('.adding-task').removeClass('adding-task');
@@ -186,6 +199,9 @@ currentWindow.webContents.once('dom-ready', () => {
             if(counting){
                 return;
             }
+            if($(this).closest('li').hasClass('complete')){
+                return;
+            }
             $(this).removeClass('fa-play');
             $(this).addClass('fa-pause');
             $(this).closest('li').addClass('current');
@@ -235,7 +251,7 @@ currentWindow.webContents.once('dom-ready', () => {
             return;
         }
         $('.main-content .content.active ul').html('');
-        store.set(date, toImport);
+        store.set(date, []);
         for(var i = 0; i < toImport.length; i++){
             var task = toImport[i][0];
             var remaining = toImport[i][1];
@@ -273,7 +289,7 @@ function addTask(task, seconds){
     var tasks = store.get(date);
     tasks.push([task, seconds, seconds]);
     store.set(date, tasks);
-    $('.main-content .content.active ul').append('<li class="adding-task">'+task+'<div class="time-wrap"><i class="fas fa-play"></i><span class="time"></span><span class="fas fa-times"></span></div></li>');
+    $('.main-content .content.active ul').append('<li class="adding-task">'+task+'<div class="time-wrap"><i class="fas fa-play"></i><span class="fas fa-check"></span><span class="time"></span><span class="fas fa-times"></span></div></li>');
     $('.adding-task .time-wrap .time').data('index', tasks.length-1);
     $('.adding-task .time-wrap .time').countdown({layout : '{hnn}:{mnn}:{snn}', until : '+'+seconds, tickInterval: 10, onTick: function(){
         var index = $(this).data('index');
@@ -281,11 +297,23 @@ function addTask(task, seconds){
         var periods = $(this).countdown('getTimes');
         updateTasks[index][2] = $.countdown.periodsToSeconds(periods);
         store.set(date, updateTasks);
+        if(updateTasks[index][2] == 0){
+            $(this).closest('li').addClass('complete');
+            $(this).countdown('pause');
+            $(this).siblings('i').removeClass('fa-pause');
+            $(this).siblings('i').addClass('fa-play');
+            $(this).closest('li').removeClass('current');
+            $('.main-content li').removeClass('disabled');
+            counting = false;
+        }
     }});
     $('.adding-task .time-wrap .time').countdown('pause');
     $('.adding-task i').click(function(){
         if($(this).hasClass('fa-play')){
             if(counting){
+                return;
+            }
+            if($(this).closest('li').hasClass('complete')){
                 return;
             }
             $(this).removeClass('fa-play');
