@@ -93,7 +93,7 @@
             cursor: pointer;
         }
     }
-    .add-modal{
+    .add-modal, .import-modal{
         position: fixed;
         width: 100%;
         height: 100%;
@@ -104,6 +104,46 @@
         display: none;
         .cell-center{
             text-align: center;
+        }
+    }
+    .import-box{
+        background-color: rgb(37, 37, 38);
+        padding: 20px;
+        display: inline-block;
+        position: relative;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        h2{
+            margin-bottom: 30px;
+        }
+        .button-wrap div{
+            display: inline-block;
+            margin-left: 10px;
+            margin-right: 10px;
+            width: 100px;
+            margin-top: 40px;
+            height: 30px;
+            line-height: 30px;
+            cursor: pointer;
+            background-color: rgb(60, 60, 60);
+            -webkit-transition: opacity 0.3s;
+            -o-transition: opacity 0.3s;
+            transition: opacity 0.3s;
+            &:hover{
+                opacity: 0.5;
+            }
+        }
+        .fa-times{
+            text-align: center;
+            position: absolute;
+            top: 13px;
+            right: 10px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
         }
     }
     .add-box{
@@ -188,7 +228,7 @@
             }
         }
     }
-    .add-task{
+    .add-task, .load-previous{
         width: 300px;
         margin-left: auto;
         margin-right: auto;
@@ -215,6 +255,31 @@
             right: 20px;
             height: 40px;
             line-height: 40px;
+        }
+    }
+    .load-previous{
+        margin-top: 15px;
+    }
+    .content-error{
+        margin-top: 20px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 40px;
+        padding-right: 40px;
+        height: 30px;
+        line-height: 30px;
+        color: #E62600;
+        background-color: #FCF4F2;
+        display: none;
+        position: relative;
+        .fa-times{
+            position: absolute;
+            left: 5px;
+            top: 0px;
+            height: 30px;
+            line-height: 30px;
+            width: 30px;
+            cursor: pointer;
         }
     }
 }

@@ -6,6 +6,7 @@ const store = new Store();
 var firstTime = false;
 var counting = false;
 var date = getDate();
+var yesterday = getYesterday();
 if(store.get('used') == undefined){
     firstTime = true;
     store.set('window.maximized', false);
@@ -214,10 +215,54 @@ currentWindow.webContents.once('dom-ready', () => {
         counting = false;
     });
 
+    // Import from yesterday
+    $('.main-content .load-previous').click(function(){
+        var toImport = store.get(yesterday);
+        if(toImport == undefined || toImport.length == 0){
+            $('.content-error span').html('No tasks were found from yesterday!');
+            $('.content-error').css('display', 'inline-block');
+        }else{
+            $('.import-modal').css('display', 'block');
+        }
+    });
+    $('.import-modal .fa-times, .import-modal .cancel').click(function(){
+        $('.import-modal').css('display', 'none');
+    });
+    $('.import-modal .continue').click(function(){
+        var toImport = store.get(yesterday);
+        if(toImport == undefined || toImport.length == 0){
+            $('.import-modal').css('display', 'none');
+            return;
+        }
+        $('.main-content .content.active ul').html('');
+        store.set(date, toImport);
+        for(var i = 0; i < toImport.length; i++){
+            var task = toImport[i][0];
+            var remaining = toImport[i][1];
+            addTask(task, remaining);
+        }
+        $('.import-modal').css('display', 'none');
+    });
+
+    // Closing error
+    $('.content-error .fa-times').click(function(){
+        $('.content-error span').html('');
+        $('.content-error').css('display', 'none');
+    });
+
 });
 
 function getDate(){
     var d = new Date();
+    var month = d.getMonth()+1;
+    var day = d.getDate();
+    var output = (month<10 ? '0' : '') + month + '/' + (day<10 ? '0' : '') + day + '/' + d.getFullYear();
+    return output;
+}
+
+function getYesterday(){
+    var d = new Date();
+    d.setDate(d.getDate() - 1);
     var month = d.getMonth()+1;
     var day = d.getDate();
     var output = (month<10 ? '0' : '') + month + '/' + (day<10 ? '0' : '') + day + '/' + d.getFullYear();
