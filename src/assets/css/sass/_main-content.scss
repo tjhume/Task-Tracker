@@ -73,7 +73,7 @@
                 opacity: 0.5;
                 pointer-events: none;
             }
-            .fa-times{
+            .fa-times.close{
                 margin-left: 20px;
                 cursor: pointer;
                 opacity: 0;
@@ -83,7 +83,12 @@
                 margin-right: 20px;
                 color: green;
             }
-            &:hover .fa-times{
+            .fa-times.failed{
+                display: none;
+                margin-right: 20px;
+                color: #E62600;
+            }
+            &:hover .fa-times.close{
                 opacity: 1;
             }
             &.complete{
@@ -91,6 +96,11 @@
                     display: none;
                 }
                 .fa-check{
+                    display: inline-block;
+                }
+            }
+            &.incomplete{
+                .fa-times.failed{
                     display: inline-block;
                 }
             }

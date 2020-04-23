@@ -43,7 +43,7 @@ currentWindow.webContents.once('dom-ready', () => {
             if(remaining == 0){
                 completeStr = ' complete';
             }
-            $('.main-content .content.active ul').append('<li class="adding-task'+completeStr+'">'+task+'<div class="time-wrap"><i class="fas fa-play"></i><span class="fas fa-check"></span><span class="time"></span><span class="fas fa-times"></span></div></li>');
+            $('.main-content .content.active ul').append('<li class="adding-task'+completeStr+'">'+task+'<div class="time-wrap"><i class="fas fa-play"></i><span class="fas fa-check"></span><span class="time"></span><span class="fas fa-times close"></span></div></li>');
             $('.adding-task .time-wrap .time').data('index', i);
             $('.adding-task .time-wrap .time').countdown({layout : '{hnn}:{mnn}:{snn}', until : '+'+remaining, tickInterval: 10, onTick: function(){
                 var index = $(this).data('index');
@@ -223,7 +223,7 @@ currentWindow.webContents.once('dom-ready', () => {
     });
 
     // Delete task
-    $('.main-content .time-wrap .fa-times').click(function(){
+    $('.main-content .time-wrap .close').click(function(){
         var index = $(this).siblings('.time').data('index');
         var tasks = store.get(date);
         tasks.splice(index, 1);
@@ -293,7 +293,7 @@ function addTask(task, seconds){
     var tasks = store.get(date);
     tasks.push([task, seconds, seconds]);
     store.set(date, tasks);
-    $('.main-content .content.active ul').append('<li class="adding-task">'+task+'<div class="time-wrap"><i class="fas fa-play"></i><span class="fas fa-check"></span><span class="time"></span><span class="fas fa-times"></span></div></li>');
+    $('.main-content .content.active ul').append('<li class="adding-task">'+task+'<div class="time-wrap"><i class="fas fa-play"></i><span class="fas fa-check"></span><span class="time"></span><span class="fas fa-times close"></span></div></li>');
     $('.adding-task .time-wrap .time').data('index', tasks.length-1);
     $('.adding-task .time-wrap .time').countdown({layout : '{hnn}:{mnn}:{snn}', until : '+'+seconds, tickInterval: 10, onTick: function(){
         var index = $(this).data('index');
@@ -335,7 +335,7 @@ function addTask(task, seconds){
             counting = false;
         }
     });
-    $('.adding-task .time-wrap .fa-times').click(function(){
+    $('.adding-task .time-wrap .close').click(function(){
         var index = $(this).siblings('.time').data('index');
         var tasks = store.get(date);
         tasks.splice(index, 1);
@@ -369,7 +369,10 @@ function loadTasks(day){
             }else{
                 completeStr = ' incomplete'
             }
-            $('.main-content .content.active ul').append('<li class="adding-task'+completeStr+'">'+task+'<div class="time-wrap"<span class="far fa-times-circle"></span><span class="fas fa-check"></span><span class="time"></span></div></li>');
+            $('.main-content .content.active .load-previous').css('display', 'none');
+            $('.main-content .content.active .add-task').css('display', 'none');
+            $('.main-content .content.active .content-error').css('display', 'none');
+            $('.main-content .content.active ul').append('<li class="adding-task'+completeStr+'">'+task+'<div class="time-wrap"><span class="fas fa-times failed"></span><span class="fas fa-check"></span><span class="time"></span></div></li>');
             $('.adding-task .time-wrap .time').data('index', i);
             $('.adding-task .time-wrap .time').countdown({layout : '{hnn}:{mnn}:{snn}', until : '+'+remaining, tickInterval: 10,});
             $('.adding-task .time-wrap .time').countdown('pause');
@@ -378,7 +381,10 @@ function loadTasks(day){
             if(remaining == 0){
                 completeStr = ' complete';
             }
-            $('.main-content .content.active ul').append('<li class="adding-task'+completeStr+'">'+task+'<div class="time-wrap"><i class="fas fa-play"></i><span class="fas fa-check"></span><span class="time"></span><span class="fas fa-times"></span></div></li>');
+            $('.main-content .content.active .load-previous').css('display', 'block');
+            $('.main-content .content.active .add-task').css('display', 'block');
+            $('.main-content .content.active .content-error').css('display', 'none');
+            $('.main-content .content.active ul').append('<li class="adding-task'+completeStr+'">'+task+'<div class="time-wrap"><i class="fas fa-play"></i><span class="fas fa-check"></span><span class="time"></span><span class="fas fa-times close"></span></div></li>');
             $('.adding-task .time-wrap .time').data('index', i);
             $('.adding-task .time-wrap .time').countdown({layout : '{hnn}:{mnn}:{snn}', until : '+'+remaining, tickInterval: 10, onTick: function(){
                 var index = $(this).data('index');
@@ -420,7 +426,7 @@ function loadTasks(day){
                     counting = false;
                 }
             });
-            $('.adding-task .time-wrap .fa-times').click(function(){
+            $('.adding-task .time-wrap .close').click(function(){
                 var index = $(this).siblings('.time').data('index');
                 var tasks = store.get(date);
                 tasks.splice(index, 1);

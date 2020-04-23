@@ -314,7 +314,7 @@ header .titlebar-drag-region {
   pointer-events: none;
 }
 
-.main-content ul li .fa-times {
+.main-content ul li .fa-times.close {
   margin-left: 20px;
   cursor: pointer;
   opacity: 0;
@@ -326,7 +326,13 @@ header .titlebar-drag-region {
   color: green;
 }
 
-.main-content ul li:hover .fa-times {
+.main-content ul li .fa-times.failed {
+  display: none;
+  margin-right: 20px;
+  color: #E62600;
+}
+
+.main-content ul li:hover .fa-times.close {
   opacity: 1;
 }
 
@@ -335,6 +341,10 @@ header .titlebar-drag-region {
 }
 
 .main-content ul li.complete .fa-check {
+  display: inline-block;
+}
+
+.main-content ul li.incomplete .fa-times.failed {
   display: inline-block;
 }
 

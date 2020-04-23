@@ -14,12 +14,17 @@ const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    minWidth: 800,
+    minHeight: 600,
     frame: false,
-    backgroundColor: '#1E1E1E'
+    backgroundColor: '#1E1E1E',
+    webPreferences: {
+      devTools: false
+    }
   });
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  //mainWindow.webContents.openDevTools();
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`);
