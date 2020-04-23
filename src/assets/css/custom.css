@@ -197,7 +197,7 @@ header .titlebar-drag-region {
   height: 100%;
   padding-top: 29px;
   width: 300px;
-  background-color: #252526;
+  background-color: #333333;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
@@ -206,6 +206,23 @@ header .titlebar-drag-region {
 
 .sidebar-title {
   padding: 5px 0px;
+}
+
+.history {
+  list-style-type: none;
+  background-color: #252526;
+  margin-top: 8px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.history li {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  cursor: pointer;
 }
 
 .main-content .tabs {

@@ -14,8 +14,14 @@ if(store.get('used') == undefined){
     store.set('used', true);
 }
 
+if(store.get('days') == undefined){
+    store.set('days', []);
+}
+
 // Document loaded
 currentWindow.webContents.once('dom-ready', () => {
+
+    $('.tabs .current').data('day', date);
 
     // Settings initialization
     if(!firstTime){
@@ -61,8 +67,28 @@ currentWindow.webContents.once('dom-ready', () => {
         }
     }else{
         store.set(date, []);
+        var days = store.get('days');
+        days.push(date);
+        store.set('days', days);
     }
 
+    // Load History
+    var days = store.get('days');
+    for(var i = 0; i < days.length; i++){
+        var loadedDay = store.get(days[i]);
+        if(days[i] != date && loadedDay != undefined && loadedDay.length != 0){
+            $('.history').append('<li>' + days[i] + '</li>')
+        }
+    }
+    // On clicking a history item
+    $('.history li').click(function(){
+        var dayToLoad = $(this).html();
+        $('.main-content .tabs .current').removeClass('current');
+        $('.main-content .tabs').append('<div class="current tab"><span>'+dayToLoad+'</span><span class="close"><i class="fas fa-times"></i></span></div>');
+        $('.main-content .tabs .current').data('day', dayToLoad)
+        rebindTabs();
+        loadTasks(dayToLoad);
+    });
 
     // Window controls
     $('#close').click(function(){
@@ -89,39 +115,7 @@ currentWindow.webContents.once('dom-ready', () => {
     var output = 'Today: ' + date;
     $('.tabs .current').html('<span>' + output + '</span><span class="close">');
     $('.main-content .content h2').html(output);
-
-    // Switching tabs
-    $('.tabs .tab').click(function(){
-        $(this).siblings('.current').find('i').css('opacity', '0');
-        $(this).siblings('.current').removeClass('current');
-        $(this).addClass('current');
-        $(this).find('i').css('opacity', '1');
-    });
-
-    // Closing tab
-    $('.tabs .tab i').click(function(){
-        $(this).closest('.tabs').find('.tab:last-child').find('i').css('opacity', '1');
-        var isCurrent = false;
-        if($(this).closest('.tab').hasClass('current')){
-            isCurrent = true;
-        }
-        $(this).closest('.tab').remove();
-        if(isCurrent){
-            $('.tabs .tab:last-child').addClass('current');
-        }
-    });
-
-    // Hovering tab
-    $('.tabs .tab').hover(function(){
-        if(!$(this).hasClass('current')){
-            $(this).find('i').css('opacity', '1');
-        }
-    },
-    function(){
-        if(!$(this).hasClass('current')){
-            $(this).find('i').css('opacity', '0');
-        }
-    });
+    rebindTabs();
 
     // Add task
     $('.main-content .add-task').click(function(){
@@ -348,5 +342,132 @@ function addTask(task, seconds){
 function reindex(){
     $('.main-content .content.active li .time-wrap .time').each(function(i){
         $(this).data('index', i);
+    });
+}
+
+function loadTasks(day){
+    var tasks = store.get(day);
+    $('.main-content .content.active ul').html('');
+    $('.main-content .content.active h2').html(day);
+    for(var i = 0; i < tasks.length; i++){
+        var task = tasks[i][0];
+        var remaining = tasks[i][2];
+        var completeStr = '';
+        if(day != date){
+            if(remaining == 0){
+                completeStr = ' complete';
+            }else{
+                completeStr = ' incomplete'
+            }
+            $('.main-content .content.active ul').append('<li class="adding-task'+completeStr+'">'+task+'<div class="time-wrap"<span class="far fa-times-circle"></span><span class="fas fa-check"></span><span class="time"></span></div></li>');
+            $('.adding-task .time-wrap .time').data('index', i);
+            $('.adding-task .time-wrap .time').countdown({layout : '{hnn}:{mnn}:{snn}', until : '+'+remaining, tickInterval: 10,});
+            $('.adding-task .time-wrap .time').countdown('pause');
+            $('.adding-task').removeClass('adding-task');
+        }else{
+            if(remaining == 0){
+                completeStr = ' complete';
+            }
+            $('.main-content .content.active ul').append('<li class="adding-task'+completeStr+'">'+task+'<div class="time-wrap"><i class="fas fa-play"></i><span class="fas fa-check"></span><span class="time"></span><span class="fas fa-times"></span></div></li>');
+            $('.adding-task .time-wrap .time').data('index', i);
+            $('.adding-task .time-wrap .time').countdown({layout : '{hnn}:{mnn}:{snn}', until : '+'+remaining, tickInterval: 10, onTick: function(){
+                var index = $(this).data('index');
+                var updateTasks = store.get(date);
+                var periods;
+                var periods = $(this).countdown('getTimes');
+                updateTasks[index][2] = $.countdown.periodsToSeconds(periods);
+                store.set(date, updateTasks);
+                if(updateTasks[index][2] == 0){
+                    $(this).closest('li').addClass('complete');
+                    $(this).countdown('pause');
+                    $(this).siblings('i').removeClass('fa-pause');
+                    $(this).siblings('i').addClass('fa-play');
+                    $(this).closest('li').removeClass('current');
+                    $('.main-content li').removeClass('disabled');
+                    counting = false;
+                }
+            }});
+            $('.adding-task i').click(function(){
+                if($(this).hasClass('fa-play')){
+                    if(counting){
+                        return;
+                    }
+                    if($(this).closest('li').hasClass('complete')){
+                        return;
+                    }
+                    $(this).removeClass('fa-play');
+                    $(this).addClass('fa-pause');
+                    $(this).closest('li').addClass('current');
+                    $('.main-content li').not('.current').addClass('disabled');
+                    $(this).siblings('.time').countdown('resume');
+                    counting = true;
+                }else{
+                    $(this).removeClass('fa-pause');
+                    $(this).addClass('fa-play');
+                    $(this).closest('li').removeClass('current');
+                    $('.main-content li').removeClass('disabled');
+                    $(this).siblings('.time').countdown('pause');
+                    counting = false;
+                }
+            });
+            $('.adding-task .time-wrap .fa-times').click(function(){
+                var index = $(this).siblings('.time').data('index');
+                var tasks = store.get(date);
+                tasks.splice(index, 1);
+                store.set(date, tasks);
+                $(this).siblings('.time').countdown('destroy');
+                $(this).closest('li').remove();
+                reindex();
+                $('.main-content li').removeClass('disabled');
+                counting = false;
+            });
+            $('.adding-task .time-wrap .time').countdown('pause');
+            $('.adding-task').removeClass('adding-task');
+        }
+    }
+}
+
+function rebindTabs(){
+
+    jQuery('.tabs .tab').off('click');
+    jQuery('.tabs .tab i').off('click');
+    jQuery('.tabs .tab').off('hover');
+
+    // Switching tabs
+    $('.tabs .tab').on('click', function(){
+        $(this).siblings('.current').find('i').css('opacity', '0');
+        $(this).siblings('.current').removeClass('current');
+        $(this).addClass('current');
+        $(this).find('i').css('opacity', '1');
+        
+        var toLoad = $(this).data('day');
+        loadTasks(toLoad);
+    });
+
+    // Closing tab
+    $('.tabs .tab i').on('click', function(){
+        $(this).closest('.tabs').find('.tab:last-child').find('i').css('opacity', '1');
+        var isCurrent = false;
+        if($(this).closest('.tab').hasClass('current')){
+            isCurrent = true;
+        }
+        $(this).closest('.tab').remove();
+        if(isCurrent){
+            $('.tabs .tab:last-child').addClass('current');
+            var toLoad = $('.tabs .current').data('day');
+            loadTasks(toLoad);
+        }
+    });
+
+    // Hovering tab
+    $('.tabs .tab').on('hover', function(){
+        if(!$(this).hasClass('current')){
+            $(this).find('i').css('opacity', '1');
+        }
+    },
+    function(){
+        if(!$(this).hasClass('current')){
+            $(this).find('i').css('opacity', '0');
+        }
     });
 }
