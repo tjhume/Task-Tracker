@@ -83,6 +83,16 @@ currentWindow.webContents.once('dom-ready', () => {
     // On clicking a history item
     $('.history li').click(function(){
         var dayToLoad = $(this).html();
+        var alreadyOpen = false;
+        $('.main-content .tabs .tab').each(function(i, el){
+            if($(el).data('day') == dayToLoad){
+                alreadyOpen = true;
+                $('.main-content .tabs .tab').removeClass('current');
+                $(el).addClass('current');
+                loadTasks(dayToLoad);
+            }
+        });
+        if(alreadyOpen) return;
         $('.main-content .tabs .current').removeClass('current');
         $('.main-content .tabs').append('<div class="current tab"><span>'+dayToLoad+'</span><span class="close"><i class="fas fa-times"></i></span></div>');
         $('.main-content .tabs .current').data('day', dayToLoad)
@@ -460,7 +470,7 @@ function rebindTabs(){
     });
 
     // Hovering tab
-    $('.tabs .tab').on('hover', function(){
+    $('.tabs .tab').hover(function(){
         if(!$(this).hasClass('current')){
             $(this).find('i').css('opacity', '1');
         }
