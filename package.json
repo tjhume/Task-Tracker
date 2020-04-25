@@ -1,8 +1,8 @@
 {
-  "name": "simple-todo",
-  "productName": "simple-todo",
+  "name": "tj-task-tracker",
+  "productName": "TJ's Task Tracker",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "A simple tool for tracking tasks",
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
@@ -56,7 +56,9 @@
     "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
+    "electron": "^8.2.3",
     "electron-forge": "^5.2.4",
+    "electron-packager": "^14.2.1",
     "electron-prebuilt-compile": "4.0.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.1.0",

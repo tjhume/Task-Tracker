@@ -1,4 +1,5 @@
-import { app, BrowserWindow } from 'electron';
+const { app, BrowserWindow } = require('electron');
+var path = require('path');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -19,8 +20,10 @@ const createWindow = () => {
     frame: false,
     backgroundColor: '#1E1E1E',
     webPreferences: {
+      nodeIntegration: true,
       devTools: false
-    }
+    },
+    icon: path.join(__dirname, 'assets/img/tj-logo-100.png')
   });
 
   // Open the DevTools.

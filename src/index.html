@@ -8,11 +8,14 @@
     <link rel="stylesheet" href="assets/fontawesome/css/all.min.css">
     <link rel="stylesheet" href="assets/css/custom.css">
 
-    <script>window.$ = window.jQuery = require('./assets/js/jquery.min.js');</script>
+    <script>if(typeof module === 'object'){window.module = module; module = undefined;}</script>
+
+    <script src="assets/js/jquery.min.js"></script>
     <script src = "assets/js/jquery.plugin.min.js"></script>
     <script src="assets/js/jquery.countdown.min.js"></script>
     <script src="assets/js/custom.js"></script>
 
+    <script>if(window.module){module = window.module;}</script>
   </head>
   <body>
     <!--Title Bar-->
