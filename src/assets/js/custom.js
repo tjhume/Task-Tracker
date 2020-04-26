@@ -75,7 +75,7 @@ currentWindow.webContents.once('dom-ready', () => {
     // Load History
     var days = store.get('days');
     if(days.length <= 1){
-        $('.history').append('<li>No history found</li>');
+        $('.history').append('<li style="pointer-events: none; cursor: auto;">No history found</li>');
     }
     for(var i = 0; i < days.length; i++){
         var loadedDay = store.get(days[i]);

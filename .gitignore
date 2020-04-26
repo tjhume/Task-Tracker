@@ -5,3 +5,5 @@ src/assets/css/custom.css.map
 .compilerc
 .eslintrc
 release-builds
+build-win.bat
+build-mac.txt
