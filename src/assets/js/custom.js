@@ -113,15 +113,29 @@ currentWindow.webContents.once('dom-ready', () => {
     $('#maximize').click(function(){
         if(currentWindow.isMaximized()){
             currentWindow.unmaximize();
-            store.set('window.maximized', false);
         }else{
             currentWindow.maximize();
-            store.set('window.maximized', true);
         }
     });
-    currentWindow.on('resize', function () {
-        var size = currentWindow.getSize();
-        store.set('window.size', size);
+
+    // Save window maximized/unmaximized
+    currentWindow.on('unmaximize', function(){
+        store.set('window.maximized', false);
+    });
+    currentWindow.on('maximize', function(){
+        store.set('window.maximized', true);
+    });
+
+    // Save window size
+    $(window).bind('resize', function(e){
+        window.resizeEvt;
+        $(window).resize(function(){
+            clearTimeout(window.resizeEvt);
+            window.resizeEvt = setTimeout(function(){
+                var size = currentWindow.getSize();
+                store.set('window.size', size);
+            }, 250);
+        });
     });
 
     // Create current tab and page
