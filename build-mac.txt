@@ -1,3 +1,0 @@
-electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/img/tj-logo-48.icns --prune=true --out=release-builds
-
-Run in CL started as admin
